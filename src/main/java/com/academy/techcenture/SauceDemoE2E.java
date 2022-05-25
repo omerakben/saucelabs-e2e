@@ -131,7 +131,8 @@ public class SauceDemoE2E {
 //        16. Verify the price of first item is $7.99 and last one is $49.99
 
         WebElement firstItemPrice=driver.findElement(By.xpath("//div[.='$7.99']"));
-        System.out.println(firstItemPrice);
+        System.out.println(firstItemPrice);;
+        System.out.println("some changes");
 
     }
 
