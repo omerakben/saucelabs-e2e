@@ -7,10 +7,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.awt.*;
 import java.time.Duration;
+import java.util.List;
 
 public class SauceDemoE2E {
 
@@ -30,21 +32,21 @@ public class SauceDemoE2E {
         //3. Verify the title of the page
         //title[text()='Swag Labs']
         boolean title = driver.getTitle().equals("Swag Labs");
-        System.out.println  ( title? "Title is correct. " + title: "Title is NOT correct." );
+        System.out.println(title ? "Title is correct. " + title : "Title is NOT correct.");
 
 
         //4. Verify the SwagLabs Logo and Bot image
         WebElement loginLogo = driver.findElement(By.className("login_logo"));
         if (loginLogo.isDisplayed()) {
             System.out.println("Login Logo is displayed!");
-        }else {
+        } else {
             System.out.println("Login Logo is NOT displayed!");
         }
 
         WebElement loginBotPicture = driver.findElement(By.className("bot_column"));
         if (loginBotPicture.isDisplayed()) {
             System.out.println("Login Bot picture is displayed!");
-        }else{
+        } else {
             System.out.println("Login Bot picture is NOT displayed!");
         }
 
@@ -65,34 +67,83 @@ public class SauceDemoE2E {
 
         //6. Verify title when user logs in
         title = driver.getTitle().equals("Swag Labs");
-        System.out.println  ( title? "Title is correct. " + title: "Title is NOT correct." );
+        System.out.println(title ? "Title is correct. " + title : "Title is NOT correct.");
 
 
         //7. Verify Products title on top left
         WebElement titleProducts = driver.findElement(By.className("title"));
         if (titleProducts.isDisplayed()) {
             String titleText = titleProducts.getText();
-            String expectedTitle = "PRODUCTS!";
-            System.out.println("Except it "+ titleText);
-        }else {
+            String expectedTitle = "PRODUCTS";
+            System.out.println("Excpected title: " + expectedTitle + "." + "Displayed title: " + titleText);
+        } else {
             System.out.println("Title is NOT displayed");
         }
+        // 8. Click on Menu on Top left
+        WebElement menuBtn = driver.findElement(By.id("react-burger-menu-btn"));
+        menuBtn.click();
 
+        //  9. Verify there are 4 links: All items, About, Logout and Reset App State
 
+        List<WebElement> menuElements = driver.findElements(By.xpath("//a[@class='bm-item menu-item']"));
+        String[] menuOptions = {"all items", "about", "logout", "reset app state"};
+        for (int i = 0; i < menuElements.size(); i++) {
+            boolean menuItemCorrect = menuElements.get(i).getText().trim().toLowerCase().equals(menuOptions[i]);
+            if (!menuItemCorrect) {
+                System.out.println("Incorrect menu item: " + menuOptions[i]);
+            }
+        }
+        //     10. Click on about link (this will take the driver to another page)
+
+        WebElement aboutMenuLink = driver.findElement(By.id("about_sidebar_link"));
+        aboutMenuLink.click();
+
+        //      11. Verify the title of the new tab is “Cross Browser Testing, Selenium Testing, Mobile Testing | Sauce Labs”
+
+        title = driver.getTitle().equals("Cross Browser Testing, Selenium Testing, Mobile Testing | Sauce Labs");
+        System.out.println(title ? "Title is correct. " + title : "Title is NOT correct.");
+
+//        12. Come back to previous page
+//        13. Close the menu panel
+
+        driver.navigate().back();
+        WebElement closeMenu = driver.findElement(By.id("react-burger-cross-btn"));
+        if(closeMenu.isDisplayed()) {
+            closeMenu.click();
+        }
+
+        //    14. Verify there are 6 products
+
+        List<WebElement> items = driver.findElements(By.xpath("//div[@class='inventory_item_name']"));
+
+            if (items.size()==6) {
+                System.out.println("Number of items: " + items.size()+" Should be 6.");
+            }
+
+        //15. Click on filter on top right and select PRICE(LOW TO HIGH)
+
+        WebElement filterBtn=driver.findElement(By.xpath("//select[@class='product_sort_container']"));
+            Select select=new Select(filterBtn);
+
+            select.selectByValue("lohi");
+
+//        15. Click on filter on top right and select PRICE(LOW TO HIGH)
+//        16. Verify the price of first item is $7.99 and last one is $49.99
+
+        WebElement firstItemPrice=driver.findElement(By.xpath("//div[.='$7.99']"));
+        System.out.println(firstItemPrice);
+
+    }
 
 
        /*
 
 
-        8. Click on Menu on Top left
-        9. Verify there are 4 links: All items, About, Logout and Reset App State
-        10. Click on about link (this will take the driver to another page)
-        11. Verify the title of the new tab is “Cross Browser Testing, Selenium Testing, Mobile Testing | Sauce Labs”
-        12. Come back to previous page
-        13. Close the menu panel
-        14. Verify there are 6 products
-        15. Click on filter on top right and select PRICE(LOW TO HIGH)
-        16. Verify the price of first item is $7.99 and last one is $49.99
+
+
+
+
+
         17. Click on the title of the first product
         18. Verify Title, description, price and add to cart button is displayed
         19. Verify the price is $7.99
@@ -117,11 +168,5 @@ public class SauceDemoE2E {
         36. Wait for 3 seconds and close the driver*/
 
 
+}//end main
 
-
-
-
-
-    }//end main
-
-}
