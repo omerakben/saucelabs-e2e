@@ -127,7 +127,6 @@ public class SauceDemoE2E {
 
             select.selectByValue("lohi");
 
-//        15. Click on filter on top right and select PRICE(LOW TO HIGH)
 //        16. Verify the price of first item is $7.99 and last one is $49.99
 
         WebElement firstItemPrice=driver.findElement(By.xpath("//div[.='$7.99']"));
@@ -137,12 +136,6 @@ public class SauceDemoE2E {
 
 
        /*
-
-
-
-
-
-
 
         17. Click on the title of the first product
         18. Verify Title, description, price and add to cart button is displayed
