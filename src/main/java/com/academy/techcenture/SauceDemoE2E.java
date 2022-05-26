@@ -306,7 +306,7 @@ public class SauceDemoE2E{
         // 36. Wait for 3 seconds and close the driver
         Thread.sleep(3000);
         driver.close();
-        System.out.println("End to end test complete successfully!");
+        System.out.println("End to end test complete SUCCESSFULLY!");
 
 
     }//end main
